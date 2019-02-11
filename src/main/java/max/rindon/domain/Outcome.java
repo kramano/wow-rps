@@ -1,3 +1,3 @@
 package max.rindon.domain;
 
-public enum Outcome { WIN, LOSE, DRAW }
+public enum Outcome { WIN, LOSS, DRAW }

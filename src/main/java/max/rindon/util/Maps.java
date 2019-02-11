@@ -14,4 +14,9 @@ public class Maps {
     public static <K, U> Collector<Map.Entry<K, U>, ?, Map<K, U>> entriesToMap() {
         return Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue);
     }
+
+    public static <K, V> Map<K, V> inverse(Map<V, K> map) {
+        return map.entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
+    }
 }

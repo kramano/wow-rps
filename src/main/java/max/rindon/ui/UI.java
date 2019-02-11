@@ -39,7 +39,7 @@ public final class UI {
 
     private static final Map<Outcome, String> OUTCOME_TO_MESSAGE = unmodifiableMap(Stream.of(
             entry(WIN, "You won!"),
-            entry(LOSE, "You lost!"),
+            entry(LOSS, "You lost!"),
             entry(DRAW, "Draw :("))
             .collect(entriesToMap()));
 
@@ -60,10 +60,17 @@ public final class UI {
         return OUTCOME_TO_MESSAGE.get(outcome);
     }
 
-    public static String displayRoundResults(Round round) {
+    public static String round2Message(Round round) {
         return String.join(SEP,
                 "Your move was: " + round.playerMove,
                 "AI move was: " + round.aiMove,
                 outcome2Message(round.outcome));
+    }
+
+    public static String statistics2Message(EnumMap<Outcome, Integer> statistics) {
+        return String.join(SEP,
+                "You: " + statistics.get(WIN),
+                           "AI: " + statistics.get(LOSS),
+                           "Draw: " + statistics.get(DRAW));
     }
 }

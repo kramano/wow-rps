@@ -1,20 +1,17 @@
 package max.rindon.temp;
 
 import max.rindon.ai.Strategies;
-import max.rindon.domain.Move;
-import max.rindon.domain.Outcome;
-import max.rindon.domain.Round;
-import max.rindon.domain.Rules;
+import max.rindon.domain.RockPaperScissors;
 import max.rindon.ui.Command;
 import max.rindon.ui.UI;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        List<Round> gameLog = new ArrayList<>();
+        RockPaperScissors game = new RockPaperScissors(Strategies.ALWAYS_ROCK);
+
         // Show welcome message
         System.out.println(UI.WELCOME_MESSAGE);
         // show help message
@@ -29,7 +26,7 @@ public class Main {
 
             if (command == Command.QUIT) {
                 // display stats
-                System.out.println(computesStatistics(gameLog));
+                System.out.println(UI.statistics2Message(game.getStatistics()));
                 return;
             } else if (command == Command.HELP) {
                 // display help message
@@ -37,62 +34,17 @@ public class Main {
                 continue;
             } else if (command == Command.STATS) {
                 // display stats
-                System.out.println(computesStatistics(gameLog));
+                System.out.println(UI.statistics2Message(game.getStatistics()));
                 continue;
             }
 
-            Move aiMove = Strategies.random().apply(Collections.emptyList());
             String message = UI
                     .parseMove(playerInput)
-                    .map(playerMove -> playRound(playerMove, aiMove, gameLog))
-                    .map(UI::displayRoundResults)
-                    .orElse("Sorry, I don't understand your move: " + playerInput);
+                    .map(game::playRound)
+                    .map(UI::round2Message)
+                    .orElse("Sorry, I didn't understand your move: " + playerInput);
 
             System.out.println(message);
-        }
-    }
-
-    // TODO: refactor gameLog mutation inside the method
-    private static Round playRound(Move playerMove, Move aiMove, List<Round> gameLog) {
-        Outcome outcome = Rules.outcome(playerMove, aiMove);
-        Round round = new Round(playerMove, aiMove, outcome);
-        gameLog.add(round);
-        return round;
-    }
-
-    private static Stats computesStatistics(List<Round> log) {
-        long totalPlayed = log.size();
-        Map<Outcome, Long> stats = log.stream()
-                .collect(Collectors
-                        .groupingBy(r -> r.outcome, Collectors.counting()));
-
-        return new Stats(totalPlayed,
-                stats.getOrDefault(Outcome.WIN, 0L),
-                stats.getOrDefault(Outcome.LOSE, 0L),
-                stats.getOrDefault(Outcome.DRAW, 0L));
-    }
-
-    private static class Stats {
-        final long totalRoundsPlayed;
-        final long playerWins;
-        final long aiWins;
-        final long draws;
-
-        public Stats(long totalRoundsPlayed, long playerWins, long aiWins, long draws) {
-            this.totalRoundsPlayed = totalRoundsPlayed;
-            this.playerWins = playerWins;
-            this.aiWins = aiWins;
-            this.draws = draws;
-        }
-
-        @Override
-        public String toString() {
-            return "Stats{" +
-                    "totalRoundsPlayed=" + totalRoundsPlayed +
-                    ", playerWins=" + playerWins +
-                    ", aiWins=" + aiWins +
-                    ", draws=" + draws +
-                    '}';
         }
     }
 }

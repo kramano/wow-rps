@@ -1,5 +1,6 @@
 package max.rindon.domain;
 
+
 public class Round {
     public final Move playerMove;
     public final Move aiMove;
