@@ -15,6 +15,30 @@ import static max.rindon.util.Maps.entry;
 
 public final class UI {
 
+    private static final String ROCK_ART =
+            "    _______\n" +
+            "---'   ____)\n" +
+            "      (_____)\n" +
+            "      (_____)\n" +
+            "      (____)\n" +
+            "---.__(___)\n";
+
+    private static final String PAPER_ART =
+            "    _______\n" +
+            "---'   ____)____\n" +
+            "          ______)\n" +
+            "          _______)\n" +
+            "         _______)\n" +
+            "---.__________)\n";
+
+    private static final String SCISSORS_ART =
+            "    _______\n" +
+            "---'   ____)____\n" +
+            "          ______)\n" +
+            "       __________)\n" +
+            "      (____)\n" +
+            "---.__(___)";
+
     public static final String WELCOME_MESSAGE = "Welcome to the game of Rock, Paper and Scissors!";
     public static final String MOVE_PROMPT_MESSAGE = "Please choose one of: (Rr)ock, (Pp)aper, (Ss)cissors";
 
@@ -38,9 +62,15 @@ public final class UI {
             .collect(entriesToMap()));
 
     private static final Map<Outcome, String> OUTCOME_TO_MESSAGE = unmodifiableMap(Stream.of(
-            entry(WIN, "You won!"),
-            entry(LOSS, "You lost!"),
-            entry(DRAW, "Draw :("))
+            entry(WIN, "Greetings, you won!"),
+            entry(LOSS, "Sorry, you lost. Maybe next time!"),
+            entry(DRAW, "And it's a draw."))
+            .collect(entriesToMap()));
+
+    private static final Map<Move, String> MOVE_TO_ART = unmodifiableMap(Stream.of(
+            entry(ROCK, ROCK_ART),
+            entry(PAPER, PAPER_ART),
+            entry(SCISSORS, SCISSORS_ART))
             .collect(entriesToMap()));
 
     public static final String HELP_MESSAGE = String.join(SEP,
@@ -62,9 +92,11 @@ public final class UI {
 
     public static String round2Message(Round round) {
         return String.join(SEP,
-                "Your move was: " + round.playerMove,
-                "AI move was: " + round.aiMove,
-                outcome2Message(round.outcome));
+                MOVE_TO_ART.get(round.playerMove),
+                ">=====VS=====<",
+                MOVE_TO_ART.get(round.aiMove),
+                outcome2Message(round.outcome),
+                "-------------------------------------------------------");
     }
 
     public static String statistics2Message(EnumMap<Outcome, Integer> statistics) {

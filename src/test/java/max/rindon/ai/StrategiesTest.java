@@ -5,9 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.util.Collections.emptyList;
@@ -111,5 +109,16 @@ class StrategiesTest {
     void beatMostFrequent() {
         Move move = Strategies.beatMostFrequent(ROCK).makeMove(MOVES);
         assertEquals(SCISSORS, move);
+    }
+
+    @Test
+    @DisplayName("Uses Markov chain to predict next opponent move.")
+    void markovChain() {
+        Strategy markov = Strategies.markovChain(PAPER);
+
+        List<Move> rocks = Arrays.asList(ROCK, ROCK, ROCK, ROCK, ROCK, ROCK);
+        assertEquals(PAPER, markov.makeMove(rocks));
+
+
     }
 }

@@ -7,16 +7,13 @@ import java.util.stream.Collectors;
 
 public class Maps {
 
+    private Maps() {}
+
     public static <K, V> Map.Entry<K, V> entry(K key, V value) {
         return new SimpleEntry<>(key, value);
     }
 
     public static <K, U> Collector<Map.Entry<K, U>, ?, Map<K, U>> entriesToMap() {
         return Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue);
-    }
-
-    public static <K, V> Map<K, V> inverse(Map<V, K> map) {
-        return map.entrySet().stream()
-                .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
     }
 }

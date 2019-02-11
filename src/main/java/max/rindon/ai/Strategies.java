@@ -1,21 +1,20 @@
 package max.rindon.ai;
 
 import max.rindon.domain.Move;
+import max.rindon.util.Lists;
+import max.rindon.util.Streams;
 
-import java.util.Comparator;
-import java.util.Map;
-import java.util.Random;
-import java.util.function.Function;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.function.Function.identity;
-import static max.rindon.domain.Move.ROCK;
+import static max.rindon.util.Lists.getLast;
 
 /**
  * Static factories and some combinators for strategies.
  * Combinators allow to create more complex strategies from simpler ones.
  * For example, {@link Strategies#random} strategy
- * can be implemented in terms of constant strategies using {@link Strategies#toss(Strategy, Strategy) } combinator.
+ * could be implemented in terms of constant strategies using {@link Strategies#toss(Strategy, Strategy) } combinator.
  */
 public class Strategies {
 
@@ -37,7 +36,7 @@ public class Strategies {
     }
 
     /**
-     * Make a random move. We cannot do better in a perfect world.
+     * Make a random move. It is impossible to gain an advantage over a truly random opponent.
      *
      * @return Strategy that makes random moves.
      */
@@ -69,7 +68,7 @@ public class Strategies {
         return (moves -> {
             if (moves.isEmpty()) {
                 return defaultMove;
-            } else return moves.get(moves.size() - 1).beats();
+            } else return getLast(moves).beats();
         });
     }
 
@@ -87,6 +86,14 @@ public class Strategies {
                 .map(Map.Entry::getKey)
                 .map(Move::losesTo)
                 .orElse(defaultMove));
+    }
+
+    public static Strategy markovChain(Move defaultMove) {
+        return (moves -> {
+            if (moves.isEmpty()) {
+                return defaultMove;
+            } else return new MarkovChainStrategy().makeMove(moves);
+        });
     }
 
     /**
@@ -132,5 +139,36 @@ public class Strategies {
         });
     }
 
+    public static class MarkovChainStrategy implements Strategy {
 
+        @Override
+        public Move makeMove(List<Move> moves) {
+            EnumMap<Move, List<Move>> markovChain = buildMarkovChain(moves);
+            Move last = getLast(moves);
+            List<Move> possibleMoves = markovChain.get(last);// TODO this may be empty
+            Move predictedMove = Lists.getRandomElement(possibleMoves);
+            return predictedMove.losesTo();
+        }
+
+
+        private EnumMap<Move, List<Move>> buildMarkovChain(List<Move> moves) {
+            EnumMap<Move, List<Move>> markovChain = emptyMarkovChain();
+            Streams.sliding(moves, 2)
+                    .forEach(pair -> {
+                        Move fst = pair.get(0);
+                        Move snd = pair.get(1);
+                        markovChain.compute(fst, (k, v) -> Lists.append(v, snd));
+                    });
+            return markovChain;
+        }
+
+        private EnumMap<Move, List<Move>> emptyMarkovChain() {
+            EnumMap<Move, List<Move>> result = new EnumMap<>(Move.class);
+            for (Move key : Move.values()) {
+                result.put(key, new ArrayList<>());
+            }
+            return result;
+        }
+
+    }
 }
