@@ -1,16 +1,14 @@
-package max.rindon.domain;
+package max.rindon.rps.domain;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static max.rindon.domain.Move.*;
-import static max.rindon.domain.Outcome.*;
+import static max.rindon.rps.domain.Move.*;
+import static max.rindon.rps.domain.Outcome.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
@@ -22,13 +20,6 @@ class RulesTest {
     void testGameRules(Move first, Move second, Outcome expected) {
         Outcome outcome = Rules.evaluate(first, second);
         assertEquals(outcome, expected);
-    }
-
-    @Test
-    void testLosesTo() {
-        assertEquals(ROCK, Rules.losesTo(SCISSORS));
-        assertEquals(PAPER, Rules.losesTo(ROCK));
-        assertEquals(SCISSORS, Rules.losesTo(PAPER));
     }
 
     static Stream<Arguments> movesAndOutcomesProvider() {

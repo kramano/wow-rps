@@ -1,6 +1,6 @@
-package max.rindon.domain;
+package max.rindon.rps.domain;
 
-import max.rindon.ai.Strategy;
+import max.rindon.rps.ai.Strategy;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -39,7 +39,6 @@ public class RockPaperScissors {
         }
         return result;
     }
-
 
     public EnumMap<Outcome, Integer> getStatistics() {
         return statistics;

@@ -13,7 +13,7 @@ repositories {
 }
 
 application {
-    mainClassName = 'max.rindon.temp.Main'
+    mainClassName = 'max.rindon.rps.Main'
 }
 
 run {

@@ -1,4 +1,4 @@
-package max.rindon.util;
+package max.rindon.rps.util;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map;

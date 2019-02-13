@@ -1,4 +1,4 @@
-package max.rindon.domain;
+package max.rindon.rps.domain;
 
 import java.util.EnumMap;
 
@@ -17,7 +17,6 @@ public enum Move {
         BEATS.put(SCISSORS, PAPER);
         BEATS.put(ROCK, SCISSORS);
     }
-
 
     public Move beats() { return BEATS.get(this); }
 

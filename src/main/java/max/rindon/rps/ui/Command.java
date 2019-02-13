@@ -1,4 +1,4 @@
-package max.rindon.ui;
+package max.rindon.rps.ui;
 
 public enum Command {
     QUIT, STATS, HELP, CONTINUE

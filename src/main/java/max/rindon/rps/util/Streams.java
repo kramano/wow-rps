@@ -1,4 +1,4 @@
-package max.rindon.util;
+package max.rindon.rps.util;
 
 import java.util.List;
 import java.util.stream.IntStream;

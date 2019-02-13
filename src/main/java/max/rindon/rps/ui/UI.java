@@ -1,20 +1,19 @@
-package max.rindon.ui;
+package max.rindon.rps.ui;
 
-import max.rindon.domain.Move;
-import max.rindon.domain.Outcome;
-import max.rindon.domain.Round;
+import max.rindon.rps.domain.Move;
+import max.rindon.rps.domain.Outcome;
+import max.rindon.rps.domain.Round;
 
 import java.util.*;
 import java.util.stream.Stream;
 
 import static java.util.Collections.unmodifiableMap;
-import static max.rindon.domain.Move.*;
-import static max.rindon.domain.Outcome.*;
-import static max.rindon.util.Maps.entriesToMap;
-import static max.rindon.util.Maps.entry;
+import static max.rindon.rps.util.Maps.entriesToMap;
+import static max.rindon.rps.util.Maps.entry;
 
 public final class UI {
 
+    public static final String PARSE_MOVE_MESSAGE = "Sorry, I didn't understand your move: ";
     private static final String ROCK_ART =
             "    _______\n" +
             "---'   ____)\n" +
@@ -47,12 +46,12 @@ public final class UI {
     // could handle input string case in parse function to save some typing,
     // but we want to be explicit about the input we accept
     private static final Map<String, Move> STRING_TO_MOVE = unmodifiableMap(Stream.of(
-            entry("s", SCISSORS),
-            entry("S", SCISSORS),
-            entry("r", ROCK),
-            entry("R", ROCK),
-            entry("p", PAPER),
-            entry("P", PAPER))
+            entry("s", Move.SCISSORS),
+            entry("S", Move.SCISSORS),
+            entry("r", Move.ROCK),
+            entry("R", Move.ROCK),
+            entry("p", Move.PAPER),
+            entry("P", Move.PAPER))
             .collect(entriesToMap()));
 
     private static final Map<String, Command> STRING_TO_COMMAND = unmodifiableMap(Stream.of(
@@ -62,15 +61,15 @@ public final class UI {
             .collect(entriesToMap()));
 
     private static final Map<Outcome, String> OUTCOME_TO_MESSAGE = unmodifiableMap(Stream.of(
-            entry(WIN, "Greetings, you won!"),
-            entry(LOSS, "Sorry, you lost. Maybe next time!"),
-            entry(DRAW, "And it's a draw."))
+            entry(Outcome.WIN, "Greetings, you won!"),
+            entry(Outcome.LOSS, "Sorry, you lost. Maybe next time!"),
+            entry(Outcome.DRAW, "And it's a draw."))
             .collect(entriesToMap()));
 
     private static final Map<Move, String> MOVE_TO_ART = unmodifiableMap(Stream.of(
-            entry(ROCK, ROCK_ART),
-            entry(PAPER, PAPER_ART),
-            entry(SCISSORS, SCISSORS_ART))
+            entry(Move.ROCK, ROCK_ART),
+            entry(Move.PAPER, PAPER_ART),
+            entry(Move.SCISSORS, SCISSORS_ART))
             .collect(entriesToMap()));
 
     public static final String HELP_MESSAGE = String.join(SEP,
@@ -101,8 +100,12 @@ public final class UI {
 
     public static String statistics2Message(EnumMap<Outcome, Integer> statistics) {
         return String.join(SEP,
-                "You: " + statistics.get(WIN),
-                           "AI: " + statistics.get(LOSS),
-                           "Draw: " + statistics.get(DRAW));
+                "You: " + statistics.get(Outcome.WIN),
+                           "AI: " + statistics.get(Outcome.LOSS),
+                           "Draw: " + statistics.get(Outcome.DRAW));
+    }
+
+    public static String parseMoveError(String playerInput) {
+        return PARSE_MOVE_MESSAGE + playerInput;
     }
 }

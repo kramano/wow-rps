@@ -29,14 +29,3 @@ Make sure you have [Java 8](https://www.oracle.com/technetwork/java/javase/downl
 
 * To run the rps game: `gradlew run -q --console=plain` or `gradlew.bat run -q --console=plain` on Windows
 * To run the tests: `gradlew test` or `gradlew.bat test` on Windows
-
-# Navigating the code
-
-Here are the main highlights of the code:
-
-* Todo
-
-
-# License
- 
-This code is available under the MIT license. See the LICENSE file for more info.
