@@ -89,7 +89,7 @@ public final class UI {
         return OUTCOME_TO_MESSAGE.get(outcome);
     }
 
-    public static String round2Message(Round round) {
+    public static String renderRound(Round round) {
         return String.join(SEP,
                 MOVE_TO_ART.get(round.playerMove),
                 ">=====VS=====<",
@@ -98,14 +98,14 @@ public final class UI {
                 "-------------------------------------------------------");
     }
 
-    public static String statistics2Message(Map<Outcome, Integer> statistics) {
+    public static String renderStatistics(Map<Outcome, Integer> statistics) {
         return String.join(SEP,
                 "You: " + statistics.get(Outcome.WIN),
                            "AI: " + statistics.get(Outcome.LOSS),
                            "Draw: " + statistics.get(Outcome.DRAW));
     }
 
-    public static String parseMoveError(String playerInput) {
+    public static String renderParseMoveError(String playerInput) {
         return PARSE_MOVE_MESSAGE + playerInput;
     }
 }

@@ -5,22 +5,23 @@ import max.rindon.rps.ai.Strategy;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class RockPaperScissors {
+public class Game {
 
     private final Strategy aiStrategy;
     private final List<Round> history;
     private final EnumMap<Outcome, Integer> statistics;
 
-    public RockPaperScissors(Strategy aiStrategy) {
+    public Game(Strategy aiStrategy) {
         this.aiStrategy = aiStrategy;
         this.history = new ArrayList<>();
         this.statistics = initStatistics();
     }
 
     public Round playRound(Move playerMove) {
-        // Strategies could (and probably should)use full history,
+        // Strategies could (and probably should) use full history,
         // but all our strategies use only opponent moves.
         List<Move> pastPlayerMoves = getPlayerMoves();
+
         Move aiMove = aiStrategy.makeMove(pastPlayerMoves);
         Outcome outcome = Rules.evaluate(playerMove, aiMove);
         Round round = new Round(playerMove, aiMove, outcome);

@@ -4,7 +4,7 @@
 This repository contains a text-based rock-paper-scissors game.
 
 ```
-Please choose one of: (Rr)ock, (Pp)aper, (Ss)cissors
+Please choose one of: (r)ock, (p)aper, (s)cissors
 r
     _______
 ---'   ____)
