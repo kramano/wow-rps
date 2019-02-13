@@ -85,7 +85,7 @@ public final class UI {
         return Optional.ofNullable(STRING_TO_COMMAND.get(commandString));
     }
 
-    public static String outcome2Message(Outcome outcome) {
+    private static String outcome2Message(Outcome outcome) {
         return OUTCOME_TO_MESSAGE.get(outcome);
     }
 
