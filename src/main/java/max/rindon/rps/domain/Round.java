@@ -3,7 +3,7 @@ package max.rindon.rps.domain;
 
 import java.util.Objects;
 
-public class Round {
+public final class Round {
     public final Move playerMove;
     public final Move aiMove;
     public final Outcome outcome;

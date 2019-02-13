@@ -8,7 +8,7 @@ public class Streams {
 
     private Streams() {}
 
-    // replace with spliterator implementation
+    // replace with spliterator implementation?
     public static <T> Stream<List<T>> sliding(List<T> list, int size) {
         if (size > list.size()) {
             return Stream.empty();

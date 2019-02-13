@@ -13,7 +13,6 @@ import static max.rindon.rps.util.Maps.entry;
 
 public final class UI {
 
-    public static final String PARSE_MOVE_MESSAGE = "Sorry, I didn't understand your move: ";
     private static final String ROCK_ART =
             "    _______\n" +
             "---'   ____)\n" +
@@ -38,8 +37,9 @@ public final class UI {
             "      (____)\n" +
             "---.__(___)";
 
+    public static final String PARSE_MOVE_MESSAGE = "Sorry, I didn't understand your move: ";
     public static final String WELCOME_MESSAGE = "Welcome to the game of Rock, Paper and Scissors!";
-    public static final String MOVE_PROMPT_MESSAGE = "Please choose one of: (Rr)ock, (Pp)aper, (Ss)cissors";
+    public static final String MOVE_PROMPT_MESSAGE = "Please choose one of: (r)ock, (p)aper, (s)cissors";
 
     private static final String SEP = System.getProperty("line.separator");
 
@@ -98,7 +98,7 @@ public final class UI {
                 "-------------------------------------------------------");
     }
 
-    public static String statistics2Message(EnumMap<Outcome, Integer> statistics) {
+    public static String statistics2Message(Map<Outcome, Integer> statistics) {
         return String.join(SEP,
                 "You: " + statistics.get(Outcome.WIN),
                            "AI: " + statistics.get(Outcome.LOSS),

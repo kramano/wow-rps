@@ -5,6 +5,9 @@ import java.util.Map;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+/**
+ * Utilities to simplify map initialization.
+ */
 public class Maps {
 
     private Maps() {}

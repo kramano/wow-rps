@@ -2,16 +2,14 @@ package max.rindon.rps.domain;
 
 import max.rindon.rps.ai.Strategy;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class RockPaperScissors {
 
     private final Strategy aiStrategy;
-    private List<Round> history;
-    private EnumMap<Outcome, Integer> statistics;
+    private final List<Round> history;
+    private final EnumMap<Outcome, Integer> statistics;
 
     public RockPaperScissors(Strategy aiStrategy) {
         this.aiStrategy = aiStrategy;
@@ -20,16 +18,21 @@ public class RockPaperScissors {
     }
 
     public Round playRound(Move playerMove) {
-        List<Move> pastPlayerMoves = history.stream()
-                .map(r -> r.playerMove)
-                .collect(Collectors.toList());
-
+        // Strategies could (and probably should)use full history,
+        // but all our strategies use only opponent moves.
+        List<Move> pastPlayerMoves = getPlayerMoves();
         Move aiMove = aiStrategy.makeMove(pastPlayerMoves);
         Outcome outcome = Rules.evaluate(playerMove, aiMove);
         Round round = new Round(playerMove, aiMove, outcome);
         history.add(round);
         statistics.computeIfPresent(outcome, (k, v) -> v + 1);
         return round;
+    }
+
+    private List<Move> getPlayerMoves() {
+        return Collections.unmodifiableList(history.stream()
+                    .map(r -> r.playerMove)
+                    .collect(Collectors.toList()));
     }
 
     private EnumMap<Outcome, Integer> initStatistics() {
@@ -40,7 +43,7 @@ public class RockPaperScissors {
         return result;
     }
 
-    public EnumMap<Outcome, Integer> getStatistics() {
-        return statistics;
+    public Map<Outcome, Integer> getStatistics() {
+        return Collections.unmodifiableMap(statistics);
     }
 }
