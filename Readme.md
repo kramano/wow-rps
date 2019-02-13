@@ -1,7 +1,7 @@
 
-# Funky Java Rock-Paper-Scissors
+# Rock-Paper-Scissors
 
-This repository contains a text-based rock-paper-scissors game.
+This repository contains a text-based rock-paper-scissors game. 
 
 ```
 Please choose one of: (r)ock, (p)aper, (s)cissors
