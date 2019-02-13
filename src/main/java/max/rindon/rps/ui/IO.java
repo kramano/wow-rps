@@ -6,5 +6,8 @@ public interface IO {
 
     void write(String message);
 
-    String prompt(String message);
+    default String prompt(String message) {
+        write(message);
+        return read();
+    }
 }

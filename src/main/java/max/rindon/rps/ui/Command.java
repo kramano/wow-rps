@@ -1,5 +1,5 @@
 package max.rindon.rps.ui;
 
 public enum Command {
-    QUIT, STATS, HELP, CONTINUE
+    QUIT, STATS, HELP, PLAY
 }
